@@ -1,8 +1,8 @@
 package customnumber_test
 
 import (
+	customnumber "github.com/slysterous/custom-number"
 	"testing"
-	customnumber"github.com/slysterous/custom-number"
 )
 
 func TestCustomNumberString(t *testing.T) {

@@ -39,7 +39,7 @@ type Number struct {
 func NewNumber(values []rune, initial string) Number {
 	// initialise a new number.
 	number := Number{
-		Digits: list.New(), 
+		Digits:      list.New(),
 		DigitValues: values,
 	}
 	// add digits to the number along with their state.
