@@ -8,18 +8,12 @@ import (
 )
 
 // => 0 1 2 3 4 5 6 7 8 9 a b c d e f g h i j k l m n o p q r s t u v w x y z  arithmetic system
-
 // var value = "0a9esd"
-
 // value.increment() => 0a8ese
-
 //==================================
-
 // var value = "0a9esz"
-
 // value.increment() => 0a8et0
 //=====================================
-
 //start scrapping
 // 000000
 // .
