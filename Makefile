@@ -7,7 +7,10 @@ lint: ## perform linting
 	go vet -mod vendor -tags=integration ./...
 
 fmt: ## gofmt all files excluding vendor
-	@go fmt -mod vendor ./...
+	@go fmt ./...
 
 test: ## run tests
 	go test ./... -race -cover -v -count 1 -p 1 -tags=integration -mod vendor
+
+ci: ## run ci
+	./scripts/ci.sh
