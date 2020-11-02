@@ -11,7 +11,7 @@ Custom numbers based on custom numeral systems.
 
 ## Getting Started ##
 
-## Usage##
+## Usage ##
 
 ## Contributing ##
 
