@@ -30,7 +30,17 @@ The base is an integer that is greater than 1 (or less than negative 1), since a
 
 In base-10 (decimal) positional notation, there are 10 decimal digits and the number
 
-{\displaystyle 2506=(2\times 10^{3})+(5\times 10^{2})+(0\times 10^{1})+(6\times 10^{0})}{\displaystyle 2506=(2\times 10^{3})+(5\times 10^{2})+(0\times 10^{1})+(6\times 10^{0})}.
+![decimal equation](https://latex.codecogs.com/svg.latex?2056=(2%20*%2010^3%20)+(5%20*%2010^2)%20+(0%20*%2010%20^1)+(6*10^0))
+
+In base-16 (hexadecimal), there are 16 hexadecimal digits (0–9 and A–F) and the number
+
+![hex equation](https://latex.codecogs.com/svg.latex?171B=(1*16^3)+(7*16^2)+(1*16^1)+(B*16^0)) (where B represents the number eleven as a single symbol)
+
+In general, in base-b, there are b digits and the number
+
+![base equation](https://latex.codecogs.com/svg.latex?a_3a_2a_1a_0=(a_3%20*%20b^3)+(a_2*b^2)+(a_1*b^1)+(a_0*b^0))
+(Note that ![base digits](https://latex.codecogs.com/svg.latex?a_3a_2a_1a_0) represents a sequence of digits, not multiplication)
+
 ## Getting Started ##
 
 ## Usage ##
