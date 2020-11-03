@@ -8,19 +8,55 @@ Custom numbers based on custom numeral systems.
 ## Table of Contents ##
 
 ## About ##
-A <strong>numeral</strong> is a symbol or group of symbols that <strong>represents a number</strong>. Numerals are not the same as numbers just as words are not the same with the things they refer to. The symbols <strong>"11", "1011" and "B"</strong> are different numerals, all representing the same number.
 
-A <strong>numeral</strong> system (or system of numeration) is a <strong>framework</strong> where a set of numbers are represented by numerals in a consistent manner. It can be seen as the context that allows the numeral "11" to be interpreted as the binary numeral for three, the decimal numeral for eleven, or other numbers in different bases.
+### Why
+There are times, where we need to iterate over an X amount of possible combinations of values over a specific number or a specific string etc.
+<strong> (iterators, rainbow tables, numeral system converters) </strong>
+ 
+For example, if you have an identifier that can contain values that are either 0-9 and a-z and A-Z and you would want to know each possible 
+combination.
+
+Your base (or radix) is the amount of possible values a digit can have. In this example:
+```.env
+0-9 : 10
+
+a-z : 26
+
+A-Z : 26
+```
+That means that the base of the numeral system is 62. The possible values of a digit are:
+```.env
+0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+```
+Now, if you wanted to find all the possible combinations of numbers, for 4 digits, for the above example you would want to iterate from:
+```.env
+0000 to ZZZZ
+```
+These are <strong>916.132.832</strong> different possible combinations.
+
+### How
+A <strong>numeral</strong> is a symbol or group of symbols that <strong>represents a number</strong>. Numerals are not the
+same as numbers just as words are not the same with the things they refer to. The symbols <strong>"11", "1011" and "B"</strong>
+are different numerals, all representing the same number.
+
+A <strong>numeral</strong> system (or system of numeration) is a <strong>framework</strong> where a set of numbers are 
+represented by numerals in a consistent manner. It can be seen as the context that allows the numeral <strong>"11"</strong> to be interpreted
+as the binary numeral for <strong>three</strong>, the decimal numeral for <strong>eleven</strong>, or other numbers in different bases.
 
 Ideally, such a system will:
 
 * Represent a useful set of numbers (e.g. all whole numbers, integers, or real numbers)
+
 * Give every number represented a unique representation (or at least a standard representation)
+
 * Reflect the algebraic and arithmetic structure of the numbers.
 
-In mathematical numeral systems the base or radix is usually the number of unique digits, including zero, that a positional numeral system uses to represent numbers. 
+In mathematical numeral systems the <strong>base or radix</strong> is usually the number of unique digits, including zero, that a positional numeral system uses to represent numbers. 
 
-For example, for the decimal system the radix is 10, because it uses the 10 digits from 0 through 9. When a number "hits" 9, the next number will not be another different symbol, but a "1" followed by a "0". In binary, the radix is 2, since after it hits "1", instead of "2" or another written symbol, it jumps straight to "10", followed by "11" and "100".
+For example, for the decimal system the radix is 10, because it uses the 10 digits from 0 through 9. 
+When a number "hits" 9, the next number will not be another different symbol, but a "1" followed by a "0". 
+
+In binary, the radix is 2, since after it hits "1", instead of "2" or another written symbol, it jumps straight to "10", followed by "11" and "100".
 
 The highest symbol of a positional numeral system usually has the value one less than the value of the base of that numeral system. 
 
@@ -40,6 +76,9 @@ In general, in base-b, there are b digits and the number
 
 ![base equation](https://latex.codecogs.com/svg.latex?a_3a_2a_1a_0=(a_3%20*%20b^3)+(a_2*b^2)+(a_1*b^1)+(a_0*b^0))
 (Note that ![base digits](https://latex.codecogs.com/svg.latex?a_3a_2a_1a_0) represents a sequence of digits, not multiplication)
+
+### What
+This library, <strong>customnumber</strong> provides the ability to create custom positional numeral systems in an efficient and performant way.
 
 ## Getting Started ##
 
