@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"container/list"
 	"container/ring"
+	"fmt"
 	"strings"
 )
 
@@ -68,28 +69,59 @@ func newDigit(values []rune, state rune) ring.Ring {
 }
 
 // Increment performs a +1 to the Number.
-func (p *Number) Increment() {
+func (p *Number) Increment() error {
 	// take the first digit from the right and keep going if there are any arithmetic holdings.
 	for e := p.Digits.Back(); e != nil; e = e.Prev() {
+		// get current ring.
 		r, ok := e.Value.(ring.Ring)
-		if ok {
-			// rotate and update
-			r = *r.Next()
-			e.Value = r
+		if !ok {
+			return fmt.Errorf("customnumber: could not get ring value")
+		}
 
-			// if the digit is being reset to first digit then we
-			// have an arithmetic holding.
-			if r.Value != p.DigitValues[0] {
-				return
-			}
+		// rotate and update.
+		r = *r.Next()
+		e.Value = r
 
-			// If needed add an extra new digit on the left side.
-			if e.Prev() == nil {
-				d := newDigit(p.DigitValues, p.DigitValues[0])
-				p.Digits.PushFront(d)
-			}
+		// if the digit is not being reset (no arithmetic holdings) then there is no need to
+		// proceed in adding on the others.
+		if r.Value != p.DigitValues[0] {
+			return nil
+		}
+
+		// If needed add an extra new digit on the left side.
+		if e.Prev() == nil {
+			d := newDigit(p.DigitValues, p.DigitValues[0])
+			p.Digits.PushFront(d)
 		}
 	}
+	return nil
+}
+
+// Decrement performs a -1 to the Number.
+func (p *Number)Decrement() error{
+	// take the first digit from the right and keep going if there are any arithmetic holdings or if the number is 0.
+	for e := p.Digits.Back(); e != nil; e = e.Prev() {
+		// get current ring.
+		r, ok := e.Value.(ring.Ring)
+		if !ok {
+			return fmt.Errorf("customnumber: could not get ring value")
+		}
+
+		// rotate and update
+		r = *r.Prev()
+		e.Value = r
+
+		// if the digit has not returned to it's last state then
+		// there is no need to continue.
+		if r.Value != p.DigitValues[len(p.DigitValues)-1] {
+			return nil
+		}
+
+		if e.Prev() == nil {
+			return fmt.Errorf("customnumber: can not Decrement")
+		}
+	}
+	return nil
 }
 
 // String prints a string representation of Number.
