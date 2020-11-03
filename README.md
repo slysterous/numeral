@@ -14,6 +14,9 @@ Custom numbers based on custom numeral systems.
 ## Usage ##
 
 ## Contributing ##
+Refer to [Contributing](https://github.com/slysterous/custom-number/blob/main/CONTRIBUTING.md).
+## Report bugs using Github's [issues](https://github.com/slysterous/custom-number/issues)
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/slysterous/custom-number/issues);
 
 ## License ##
 This library is distributed under the MIT license found in the [LICENSE](./LICENSE)
