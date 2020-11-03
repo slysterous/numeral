@@ -79,7 +79,9 @@ In general, in base-b, there are b digits and the number
 
 ### What
 This library, <strong>customnumber</strong> provides the ability to create custom positional numeral systems in an efficient and performant way.
+You can create custom numbers based on custom numeral systems and use them at will. 
 
+All you need is the possible values of a digit (e.g. 0123456789ABCDEF) and an initial number (e.g. 14FF)
 ## Getting Started ##
 
 ## Usage ##
