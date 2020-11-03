@@ -5,7 +5,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/slysterous/custom-number)](https://goreportcard.com/report/github.com/slysterous/custom-number)
 
 
-Custom numbers based on custom numeral systems.
+Custom numbers based on custom positional (numeral) systems.
 ## Table of Contents ##
 
 ## About ##
