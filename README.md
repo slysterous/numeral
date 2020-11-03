@@ -8,7 +8,29 @@ Custom numbers based on custom numeral systems.
 ## Table of Contents ##
 
 ## About ##
+A <strong>numeral</strong> is a symbol or group of symbols that <strong>represents a number</strong>. Numerals are not the same as numbers just as words are not the same with the things they refer to. The symbols <strong>"11", "1011" and "B"</strong> are different numerals, all representing the same number.
 
+A <strong>numeral</strong> system (or system of numeration) is a <strong>framework</strong> where a set of numbers are represented by numerals in a consistent manner. It can be seen as the context that allows the numeral "11" to be interpreted as the binary numeral for three, the decimal numeral for eleven, or other numbers in different bases.
+
+Ideally, such a system will:
+
+* Represent a useful set of numbers (e.g. all whole numbers, integers, or real numbers)
+* Give every number represented a unique representation (or at least a standard representation)
+* Reflect the algebraic and arithmetic structure of the numbers.
+
+In mathematical numeral systems the base or radix is usually the number of unique digits, including zero, that a positional numeral system uses to represent numbers. 
+
+For example, for the decimal system the radix is 10, because it uses the 10 digits from 0 through 9. When a number "hits" 9, the next number will not be another different symbol, but a "1" followed by a "0". In binary, the radix is 2, since after it hits "1", instead of "2" or another written symbol, it jumps straight to "10", followed by "11" and "100".
+
+The highest symbol of a positional numeral system usually has the value one less than the value of the base of that numeral system. 
+
+The standard positional numeral systems differ from one another only in the base they use.
+
+The base is an integer that is greater than 1 (or less than negative 1), since a radix of zero would not have any digits, and a radix of 1 would only have the zero digit. Negative bases are rarely used.
+
+In base-10 (decimal) positional notation, there are 10 decimal digits and the number
+
+{\displaystyle 2506=(2\times 10^{3})+(5\times 10^{2})+(0\times 10^{1})+(6\times 10^{0})}{\displaystyle 2506=(2\times 10^{3})+(5\times 10^{2})+(0\times 10^{1})+(6\times 10^{0})}.
 ## Getting Started ##
 
 ## Usage ##
