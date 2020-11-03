@@ -49,7 +49,6 @@ func newDigit(values []rune, state rune) ring.Ring {
 		}
 		r = r.Next()
 	}
-
 	return *r
 }
 
