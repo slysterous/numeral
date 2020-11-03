@@ -53,14 +53,11 @@ func newDigit(values []rune, state rune) ring.Ring {
 }
 
 // Increment performs a +1 to the Number.
-func (p *Number) Increment() error {
+func (p *Number) Increment() {
 	// take the first digit from the right and keep going if there are any arithmetic holdings.
 	for e := p.Digits.Back(); e != nil; e = e.Prev() {
 		// get current ring.
-		r, ok := e.Value.(ring.Ring)
-		if !ok {
-			return fmt.Errorf("customnumber: could not get ring value")
-		}
+		r := e.Value.(ring.Ring)
 
 		// rotate and update.
 		r = *r.Next()
@@ -69,7 +66,7 @@ func (p *Number) Increment() error {
 		// if the digit is not being reset (no arithmetic holdings) then there is no need to
 		// proceed in adding on the others.
 		if r.Value != p.DigitValues[0] {
-			break
+			return
 		}
 
 		// If needed add an extra new digit on the left side.
@@ -78,7 +75,6 @@ func (p *Number) Increment() error {
 			p.Digits.PushFront(d)
 		}
 	}
-	return nil
 }
 
 // Decrement performs a -1 to the Number.
@@ -86,11 +82,7 @@ func (p *Number) Decrement() error {
 	// take the first digit from the right and keep going if there are any arithmetic holdings or if the number is 0.
 	for e := p.Digits.Back(); e != nil; e = e.Prev() {
 		// get current ring.
-		r, ok := e.Value.(ring.Ring)
-		if !ok {
-			return fmt.Errorf("customnumber: could not get ring value")
-		}
-
+		r := e.Value.(ring.Ring)
 		// rotate and update
 		r = *r.Prev()
 		e.Value = r
@@ -113,16 +105,8 @@ func (p Number) String() string {
 	// Loop over container list.
 	var numberBytes bytes.Buffer
 	for e := p.Digits.Front(); e != nil; e = e.Next() {
-		r, ok := e.Value.(ring.Ring)
-		if !ok {
-			return ""
-		}
-
-		v, ok := r.Value.(rune)
-		if !ok {
-			return ""
-		}
-
+		r := e.Value.(ring.Ring)
+		v := r.Value.(rune)
 		numberBytes.WriteString(string(v))
 	}
 	return numberBytes.String()

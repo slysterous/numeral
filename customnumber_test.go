@@ -40,10 +40,7 @@ func TestIncrement(t *testing.T) {
 			want := tt.want
 			values := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
 			number := customnumber.NewNumber(values, tt.number)
-			err := number.Increment()
-			if err != nil {
-				t.Errorf("Unexpected error on Increment, err:%v", err)
-			}
+			number.Increment()
 			if got, want := number.String(), want; got != want {
 				t.Errorf("String of custom number, want: %s got: %s", want, got)
 			}
