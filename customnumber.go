@@ -69,7 +69,7 @@ func (p *Number) Increment() error {
 		// if the digit is not being reset (no arithmetic holdings) then there is no need to
 		// proceed in adding on the others.
 		if r.Value != p.DigitValues[0] {
-			return nil
+			break
 		}
 
 		// If needed add an extra new digit on the left side.
@@ -98,7 +98,7 @@ func (p *Number) Decrement() error {
 		// if the digit has not returned to it's last state then
 		// there is no need to continue.
 		if r.Value != p.DigitValues[len(p.DigitValues)-1] {
-			return nil
+			break
 		}
 
 		if e.Prev() == nil {
