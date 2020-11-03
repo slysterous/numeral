@@ -95,14 +95,39 @@ When a digit rotates back to it's first digit as a result of an addition, then a
 and because of the doubly linked list it rotates the next, in weight digit, once. The opposite thing happens when a subtraction is happening.
 
 ## Getting Started ##
-
+All you need is at least <strong>GO 1.13</strong>
 ## Usage ##
+Get the package
+```bash
+go get github.com/slysterous/custom-number
+```
+Then all you need to do is create a custom number
+```gotemplate
+// create a slice of runes.
+digitValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
 
+number := customnumber.NewNumber(digitValues, "128z")
+
+// will make the number 1290.
+number.Increment()
+
+// will make the number 128y.
+number.Decrement()
+
+//will give you the string representation of the number.
+strnumber:=number.String()
+```
+### Make Utilities
+```bash
+ci                             run ci
+fmt                            gofmt all files excluding vendor
+lint                           perform linting
+test                           run tests
+```
 ## Contributing ##
 Refer to [Contributing](https://github.com/slysterous/custom-number/blob/main/CONTRIBUTING.md).
 ## Report bugs using Github's [issues](https://github.com/slysterous/custom-number/issues)
 We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/slysterous/custom-number/issues);
-
 ## License ##
 This library is distributed under the MIT license found in the [LICENSE](./LICENSE)
 file.
