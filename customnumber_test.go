@@ -87,10 +87,7 @@ func TestDecrementOnZeroThrowsErr(t *testing.T) {
 func ExampleNumber_Increment() {
 	values := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
 	number := customnumber.NewNumber(values, "123z")
-	err := number.Decrement()
-	if err == nil {
-		// do whatever you need with the error
-	}
+	number.Increment()
 	fmt.Printf(number.String())
 	// Output: 1240
 }
