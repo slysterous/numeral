@@ -82,6 +82,18 @@ This library, <strong>customnumber</strong> provides the ability to create custo
 You can create custom numbers based on custom numeral systems and use them at will. 
 
 All you need is the possible values of a digit (e.g. 0123456789ABCDEF) and an initial number (e.g. 14FF)
+
+To implement our HOW we utilize 2 standard library packages:
+* [container/ring](https://golang.org/pkg/container/ring/) (circular list)
+* [container/list](https://golang.org/pkg/container/list/) (doubly linked list)
+
+Each digit represented as a circular list that contains the all the possible numerals.
+
+Each number is represented as a doubly linked list of circular lists. 
+
+When a digit rotates back to it's first digit as a result of an addition, then an arithmetic holding is generated
+and because of the doubly linked list it rotates the next, in weight digit, once. The opposite thing happens when a subtraction is happening.
+
 ## Getting Started ##
 
 ## Usage ##
