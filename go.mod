@@ -1,3 +1,4 @@
-module github.com/slysterous/custom-number
+module github.com/slysterous/numeral
 
 go 1.13
+
