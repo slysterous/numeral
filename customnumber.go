@@ -8,20 +8,6 @@ import (
 	"strings"
 )
 
-// => 0 1 2 3 4 5 6 7 8 9 a b c d e f g h i j k l m n o p q r s t u v w x y z  arithmetic system
-// var value = "0a9esd"
-// value.increment() => 0a8ese
-//==================================
-// var value = "0a9esz"
-// value.increment() => 0a8et0
-//=====================================
-//start scrapping
-// 000000
-// .
-// .
-// 00000z
-// 000010
-
 // Number represents a custom number that is consisted by its digits
 // and digit values.
 type Number struct {
@@ -42,7 +28,6 @@ func NewNumber(values []rune, initial string) Number {
 		digit := newDigit(values, rune(initial[i]))
 		number.Digits.PushBack(digit)
 	}
-
 	return number
 }
 
@@ -98,7 +83,7 @@ func (p *Number) Increment() error {
 }
 
 // Decrement performs a -1 to the Number.
-func (p *Number)Decrement() error{
+func (p *Number) Decrement() error {
 	// take the first digit from the right and keep going if there are any arithmetic holdings or if the number is 0.
 	for e := p.Digits.Back(); e != nil; e = e.Prev() {
 		// get current ring.

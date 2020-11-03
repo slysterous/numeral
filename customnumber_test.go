@@ -26,23 +26,23 @@ func TestCustomNumberSmartString(t *testing.T) {
 	}
 }
 
-var incrementTests= []struct{
+var incrementTests = []struct {
 	number string
-	want string
+	want   string
 }{
-	{"150000","150001"}, // Regular Increment
-	{"zz","100"}, // Increment that adds a digit
+	{"150000", "150001"}, // Regular Increment
+	{"zz", "100"},        // Increment that adds a digit
 }
 
 func TestIncrement(t *testing.T) {
-	for _,tt:=range incrementTests {
+	for _, tt := range incrementTests {
 		t.Run(tt.number, func(t *testing.T) {
-			want:=tt.want
+			want := tt.want
 			values := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
 			number := customnumber.NewNumber(values, tt.number)
-			err:=number.Increment()
+			err := number.Increment()
 			if err != nil {
-				t.Errorf("Unexpected error on Increment, err:%v",err)
+				t.Errorf("Unexpected error on Increment, err:%v", err)
 			}
 			if got, want := number.String(), want; got != want {
 				t.Errorf("String of custom number, want: %s got: %s", want, got)
@@ -51,24 +51,24 @@ func TestIncrement(t *testing.T) {
 	}
 }
 
-var decrementTests= []struct{
+var decrementTests = []struct {
 	number string
-	want string
+	want   string
 }{
-	{"150001","150000"}, // Regular decrement
-	{"15000","14zzz"}, // Decrement that borrows carry
-	{"1000","0zzz"}, // Decrement creates leading carry
+	{"150001", "150000"}, // Regular decrement
+	{"15000", "14zzz"},   // Decrement that borrows carry
+	{"1000", "0zzz"},     // Decrement creates leading carry
 }
 
 func TestDecrement(t *testing.T) {
-	for _,tt:=range decrementTests {
+	for _, tt := range decrementTests {
 		t.Run(tt.number, func(t *testing.T) {
 			want := tt.want
 			values := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
 			number := customnumber.NewNumber(values, tt.number)
-			err:=number.Decrement()
+			err := number.Decrement()
 			if err != nil {
-				t.Errorf("Unexpected error on Decrement, err:%v",err)
+				t.Errorf("Unexpected error on Decrement, err:%v", err)
 			}
 			if got, want := number.String(), want; got != want {
 				t.Errorf("String of custom number, want: %s got: %s", want, got)
@@ -80,8 +80,8 @@ func TestDecrement(t *testing.T) {
 func TestDecrementOnZeroThrowsErr(t *testing.T) {
 	values := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
 	number := customnumber.NewNumber(values, "0000")
-	err:=number.Decrement()
-	if err==nil{
+	err := number.Decrement()
+	if err == nil {
 		t.Errorf("Expected error to be thrown on Decrement")
 	}
 }
