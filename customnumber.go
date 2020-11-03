@@ -1,25 +1,25 @@
-//Package customnumber provides the ability to create custom positional numeral 
-// systems in an efficient and performant way. You can create custom numbers based 
+//Package customnumber provides the ability to create custom positional numeral
+// systems in an efficient and performant way. You can create custom numbers based
 // on custom numeral systems and use them at will.
-// 
+//
 //
 // Each digit represented as a circular list that contains the all the possible numerals.
-// 
+//
 // Each number is represented as a doubly linked list of circular lists.
 //
 // Example
-// 
+//
 //  // create a slice of runes.
 //  digitValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
-//  
+//
 //  number := customnumber.NewNumber(digitValues, "128z")
-//  
+//
 //  // will make the number 1290.
 //  number.Increment()
-//  
+//
 //  // will make the number 128y.
 //  number.Decrement()
-//  
+//
 //  //will give you the string representation of the number.
 //  strnumber:=number.String()
 package customnumber

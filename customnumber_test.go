@@ -1,9 +1,9 @@
 package customnumber_test
 
 import (
+	"fmt"
 	"github.com/slysterous/custom-number"
 	"testing"
-	"fmt"
 )
 
 func TestCustomNumberString(t *testing.T) {
@@ -84,7 +84,6 @@ func TestDecrementOnZeroThrowsErr(t *testing.T) {
 	}
 }
 
-
 func ExampleNumber_Increment() {
 	values := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
 	number := customnumber.NewNumber(values, "123z")
@@ -93,7 +92,7 @@ func ExampleNumber_Increment() {
 		// do whatever you need with the error
 	}
 	fmt.Printf(number.String())
-    // Output: 1240
+	// Output: 1240
 }
 
 func ExampleNumber_Decrement() {
@@ -104,5 +103,5 @@ func ExampleNumber_Decrement() {
 		// do whatever you need with the error
 	}
 	fmt.Printf(number.String())
-    // Output: 122z
+	// Output: 122z
 }
