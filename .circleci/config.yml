@@ -15,7 +15,7 @@ jobs:
         - run: go get golang.org/x/lint/golint
         - run: make fmt
         - run: make ci
-        - run: go test -race -coverprofile=coverage.txt -covermode=atomic
+        - run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
         - codecov/upload:
             file: './coverage.txt'
             token: 9b1131be-d1fa-4091-bf1d-2761a84e3f3b
