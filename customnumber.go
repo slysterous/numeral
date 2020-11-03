@@ -29,7 +29,6 @@ import (
 	"container/list"
 	"container/ring"
 	"fmt"
-	"strings"
 )
 
 // Number represents a custom number that is consisted by its digits
@@ -134,10 +133,4 @@ func (p Number) String() string {
 		numberBytes.WriteString(string(v))
 	}
 	return numberBytes.String()
-}
-
-// SmartString returns a string representation of a customnumber while removing leading 0s.
-func (p Number) SmartString() string {
-	str := p.String()
-	return strings.TrimLeft(str, "0")
 }
