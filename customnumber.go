@@ -29,33 +29,38 @@ import (
 	"container/list"
 	"container/ring"
 	"fmt"
+	"math"
+	"strings"
 )
 
 // Number represents a custom number that is consisted by its digits
 // and digit values.
 type Number struct {
-	Digits      *list.List
-	DigitValues []rune
+	digits      *list.List
+	digitValues []rune
 }
 
 // NewNumber initializes a CustomNumber by providing the initial number in strings
 // along with the possible values that each digit can have.
-func NewNumber(values []rune, initial string) Number {
+func NewNumber(values []rune, initial string) (*Number, error) {
 	// initialise a new number.
 	number := Number{
-		Digits:      list.New(),
-		DigitValues: values,
+		digits:      list.New(),
+		digitValues: values,
 	}
 	// add digits to the number along with their state.
 	for i := 0; i < len(initial); i++ {
-		digit := newDigit(values, rune(initial[i]))
-		number.Digits.PushBack(digit)
+		digit, err := newDigit(values, rune(initial[i]))
+		if err != nil {
+			return nil, err
+		}
+		number.digits.PushBack(digit)
 	}
-	return number
+	return &number, nil
 }
 
 // newDigit creates and initializes a new digit (ring).
-func newDigit(values []rune, state rune) ring.Ring {
+func newDigit(values []rune, state rune) (*ring.Ring, error) {
 	// initialize a new empty ring
 	r := ring.New(len(values))
 
@@ -65,6 +70,10 @@ func newDigit(values []rune, state rune) ring.Ring {
 		r = r.Next()
 	}
 
+	if indexOf(state, values) == -1 {
+		return nil, fmt.Errorf("invalid digit. value: %v does not exist in possible values: %v", state, values)
+	}
+
 	// roll the ring in desired "state" position.
 	for range values {
 		if r.Value == state {
@@ -72,63 +81,131 @@ func newDigit(values []rune, state rune) ring.Ring {
 		}
 		r = r.Next()
 	}
-	return *r
+	return r, nil
 }
 
 // Increment performs a +1 to the Number.
-func (p *Number) Increment() {
+func (n *Number) Increment() error {
 	// take the first digit from the right and keep going if there are any arithmetic holdings.
-	for e := p.Digits.Back(); e != nil; e = e.Prev() {
+	for e := n.digits.Back(); e != nil; e = e.Prev() {
 		// get current ring.
-		r := e.Value.(ring.Ring)
+		r := e.Value.(*ring.Ring)
 
 		// rotate and update.
-		r = *r.Next()
+		r = r.Next()
 		e.Value = r
 
 		// if the digit is not being reset (no arithmetic holdings) then there is no need to
 		// proceed in adding on the others.
-		if r.Value != p.DigitValues[0] {
-			return
+		if r.Value != n.digitValues[0] {
+			break
 		}
 
 		// If needed add an extra new digit on the left side.
 		if e.Prev() == nil {
-			d := newDigit(p.DigitValues, p.DigitValues[0])
-			p.Digits.PushFront(d)
+			d, _ := newDigit(n.digitValues, n.digitValues[0])
+			n.digits.PushFront(d)
 		}
 	}
+	return nil
 }
 
 // Decrement performs a -1 to the Number.
-func (p *Number) Decrement() error {
+func (n *Number) Decrement() error {
 	// take the first digit from the right and keep going if there are any arithmetic holdings or if the number is 0.
-	for e := p.Digits.Back(); e != nil; e = e.Prev() {
+	for d := n.digits.Back(); d != nil; d = d.Prev() {
 		// get current ring.
-		r := e.Value.(ring.Ring)
+		r := d.Value.(*ring.Ring)
 		// rotate and update
-		r = *r.Prev()
-		e.Value = r
+		r = r.Prev()
+		d.Value = r
 
 		// if the digit has not returned to it's last state then
 		// there is no need to continue.
-		if r.Value != p.DigitValues[len(p.DigitValues)-1] {
+		if r.Value != n.digitValues[len(n.digitValues)-1] {
 			break
 		}
 
-		if e.Prev() == nil {
+		if d.Prev() == nil {
 			return fmt.Errorf("customnumber: can not Decrement")
 		}
 	}
 	return nil
 }
 
+// Decimal converts a custom number to a decimal integer.
+func (n *Number) Decimal() (int, error) {
+	dec := 0
+	di := 0
+	for d := n.digits.Back(); d != nil; d = d.Prev() {
+		// get current ring.
+		r := d.Value.(*ring.Ring)
+		// get the index of the ring.
+		i := indexOf(r.Value.(rune), n.digitValues)
+
+		// Add digit's decimal counterpart to the decimal sum.
+		dec = dec + i*powInt(len(n.digitValues), di)
+		di++
+	}
+	return dec, nil
+}
+
+// NewFromDecimal creates a custom number from a decimal integer.
+func NewFromDecimal(values []rune, decimal int) (*Number, error) {
+	dividend := decimal
+	quotient := decimal
+	divisor := len(values)
+	sNumber := new(strings.Builder)
+	for quotient > 0 {
+
+		if dividend < divisor {
+			break
+		}
+
+		quotient := dividend / divisor
+		remainder := dividend % divisor
+
+		//prepend character
+		s := new(strings.Builder)
+		s.WriteRune(values[remainder])
+		s.WriteString(sNumber.String())
+		sNumber = s
+		//previous remainder will be the new dividend
+		dividend = quotient
+	}
+
+	//prepend last remaining character
+	s := new(strings.Builder)
+	s.WriteRune(values[dividend%divisor])
+	s.WriteString(sNumber.String())
+	sNumber = s
+
+	customNumber, err := NewNumber(values, sNumber.String())
+	if err != nil {
+		return nil, fmt.Errorf("creating converted number from decimal, err: %v", err)
+	}
+	return customNumber, nil
+}
+
+func powInt(x, y int) int {
+	return int(math.Pow(float64(x), float64(y)))
+}
+
+func indexOf(element rune, data []rune) int {
+	for k, v := range data {
+		if element == v {
+			return k
+		}
+	}
+	return -1 //not found.
+}
+
 // String prints a string representation of Number.
-func (p Number) String() string {
+func (n Number) String() string {
 	// Loop over container list.
 	var numberBytes bytes.Buffer
-	for e := p.Digits.Front(); e != nil; e = e.Next() {
-		r := e.Value.(ring.Ring)
+	for e := n.digits.Front(); e != nil; e = e.Next() {
+		r := e.Value.(*ring.Ring)
 		v := r.Value.(rune)
 		numberBytes.WriteString(string(v))
 	}
