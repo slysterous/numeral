@@ -182,6 +182,7 @@ func (n *Number) Decimal() int {
 	return dec
 }
 
+// Add adds a number to the already existing number
 func (n *Number) Add(number Number) error {
 	num := n.Decimal()
 	num2 := number.Decimal()
