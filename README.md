@@ -96,27 +96,28 @@ When a digit rotates back to it's first digit as a result of an addition, then a
 and because of the doubly linked list it rotates the next, in weight digit, once. The opposite thing happens when a subtraction is happening.
 
 ## Getting Started ##
-All you need is at least <strong>GO 1.13</strong>
+All you need is at least <strong>GO 1.15</strong>
 ## Usage ##
 Get the package
 ```bash
 go get github.com/slysterous/custom-number
 ```
 Then all you need to do is create a custom number
+For full reference on usage and available methods visit [pkg.go.dev](https://pkg.go.dev/badge/github.com/slysterous/custom-number)
 ```gotemplate
 // create a slice of runes.
 digitValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
 
 number := customnumber.NewNumber(digitValues, "128z")
 
-// will make the number 1290.
-number.Increment()
+number2, err := customnumber.NewFromDecimal(digitValues, 150)
 
-// will make the number 128y.
-number.Decrement()
 
 //will give you the string representation of the number.
-strnumber:=number.String()
+strnumber:=number2.String()
+
+//will give you the decimal integer representation of the number.
+intnumber:=number.Decimal()
 ```
 ### Make Utilities
 ```bash
