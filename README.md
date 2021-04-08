@@ -102,7 +102,7 @@ Get the package
 ```bash
 go get github.com/slysterous/custom-number
 ```
-Then all you need to do is create a custom number
+Then all you need to do is create a custom number.
 For full reference on usage and available methods visit [pkg.go.dev](https://pkg.go.dev/badge/github.com/slysterous/custom-number)
 ```gotemplate
 // create a slice of runes.
