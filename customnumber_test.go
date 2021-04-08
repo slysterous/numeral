@@ -1,12 +1,13 @@
 package customnumber_test
 
 import (
-	"fmt"
-	"github.com/slysterous/custom-number"
 	"testing"
+
+	"github.com/slysterous/custom-number"
 )
 
-var testValues = []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
+var testValues = []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+	'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
 
 func TestCustomNumberString(t *testing.T) {
 	want := "150000"
@@ -16,98 +17,185 @@ func TestCustomNumberString(t *testing.T) {
 	}
 }
 
-var incrementTests = []struct {
-	number string
-	want   string
-}{
-	{"150000", "150001"}, // Regular Increment
-	{"zz", "100"},        // Increment that adds a digit
-	{"0", "1"},           // Increment that adds a digit
-
-}
-
 func TestIncrement(t *testing.T) {
+	incrementTests := []struct {
+		number string
+		want   string
+	}{
+		{"150000", "150001"}, // Regular Increment
+		{"zz", "100"},        // Increment that adds a digit
+		{"0", "1"},           // Increment that adds a digit
+
+	}
 	for _, tt := range incrementTests {
 		t.Run(tt.number, func(t *testing.T) {
 			want := tt.want
 			number, _ := customnumber.NewNumber(testValues, tt.number)
 			number.Increment()
 			if got, want := number.String(), want; got != want {
-				t.Errorf("String of custom number, want: %s got: %s", want, got)
+				t.Errorf("got: %s want: %s", got, want)
 			}
 		})
 	}
 }
 
-var decrementTests = []struct {
-	number string
-	want   string
-}{
-	{"150001", "150000"}, // Regular decrement
-	{"15000", "14zzz"},   // Decrement that borrows carry
-	{"1000", "0zzz"},     // Decrement creates leading carry
-}
-
 func TestDecrement(t *testing.T) {
+	decrementTests := []struct {
+		number string
+		want   string
+	}{
+		{"150001", "150000"}, // Regular decrement
+		{"15000", "14zzz"},   // Decrement that borrows carry
+		{"1000", "0zzz"},     // Decrement creates leading carry
+	}
 	for _, tt := range decrementTests {
 		t.Run(tt.number, func(t *testing.T) {
 			want := tt.want
 			number, _ := customnumber.NewNumber(testValues, tt.number)
 			err := number.Decrement()
 			if err != nil {
-				t.Errorf("Unexpected error on Decrement, err:%v", err)
+				t.Errorf("expected nil,got err:%v", err)
 			}
 			if got, want := number.String(), want; got != want {
-				t.Errorf("String of custom number, want: %s got: %s", want, got)
+				t.Errorf("got: %s want: %s", got, want)
 			}
 		})
 	}
 }
 
-var decimalTests = []struct {
-	number string
-	want   int
-}{
-	{"1", 1},       // Regular decrement
-	{"100", 1296},  // Decrement that borrows carry
-	{"abc", 13368}, // Decrement creates leading carry
-}
-
 func TestDecimal(t *testing.T) {
+	decimalTests := []struct {
+		number string
+		want   int
+	}{
+		{"1", 1},
+		{"100", 1296},
+		{"abc", 13368},
+	}
 	for _, tt := range decimalTests {
 		t.Run(tt.number, func(t *testing.T) {
 			want := tt.want
 			number, _ := customnumber.NewNumber(testValues, tt.number)
-			dNumber, err := number.Decimal()
-			if err != nil {
-				t.Errorf("unexpected error on Decimal, err: %v", err)
-			}
+			dNumber := number.Decimal()
 			if dNumber != want {
-				t.Errorf("expected: %d, got: %d", want, dNumber)
+				t.Errorf("got: %d, want: %d", dNumber, want)
 			}
 		})
 	}
 }
 
-var fromDecimalTests = []struct {
-	number int
-	want   string
-}{
-	{1, "1"},       // Regular decrement
-	{1296, "100"},  // Decrement that borrows carry
-	{13368, "abc"}, // Decrement creates leading carry
-}
-
 func TestFromDecimal(t *testing.T) {
+	fromDecimalTests := []struct {
+		number int
+		want   string
+	}{
+		{1, "1"},
+		{1296, "100"},
+		{13368, "abc"},
+	}
+
 	for _, tt := range fromDecimalTests {
 		t.Run(tt.want, func(t *testing.T) {
 			want := tt.want
 			dNumber, err := customnumber.NewFromDecimal(testValues, tt.number)
 			if err != nil {
-				t.Errorf("unexpected error on Decimal, err: %v", err)
+				t.Errorf("expected nil got err: %v", err)
 			}
 			if dNumber.String() != want {
-				t.Errorf("expected: %s, got: %s", want, dNumber.String())
+				t.Errorf("got: %s, want: %s", dNumber.String(), want)
+			}
+		})
+	}
+}
+
+func TestSum(t *testing.T) {
+	sumTests := []struct {
+		number1 string
+		number2 string
+		want    string
+	}{
+		{"1", "1", "2"},
+		{"a", "z", "19"},
+		{"10", "10", "20"},
+	}
+
+	for _, tt := range sumTests {
+		t.Run(tt.want, func(t *testing.T) {
+			want := tt.want
+			number1, err := customnumber.NewNumber(testValues, tt.number1)
+			if err != nil {
+				t.Errorf("expected nil got err: %v", err)
+			}
+			number2, err := customnumber.NewNumber(testValues, tt.number2)
+			if err != nil {
+				t.Errorf("expected nil got err: %v", err)
+			}
+			sum, _ := customnumber.Sum(testValues, *number1, *number2)
+			if sum.String() != want {
+				t.Errorf("got: %s, want: %s", sum, want)
+			}
+		})
+	}
+}
+
+func TestAbsDifference(t *testing.T) {
+	absDifferenceTests := []struct {
+		number1 string
+		number2 string
+		want    string
+	}{
+		{"2", "9", "7"},
+		{"10", "z", "1"},
+		{"10", "1", "z"},
+	}
+
+	for _, tt := range absDifferenceTests {
+		t.Run(tt.want, func(t *testing.T) {
+			want := tt.want
+			number1, err := customnumber.NewNumber(testValues, tt.number1)
+			if err != nil {
+				t.Errorf("expected nil got err: %v", err)
+			}
+			number2, err := customnumber.NewNumber(testValues, tt.number2)
+			if err != nil {
+				t.Errorf("expected nil got err: %v", err)
+			}
+			absDiff, _ := customnumber.AbsDifference(testValues, *number1, *number2)
+			if absDiff.String() != want {
+				t.Errorf("got: %s, want: %s", absDiff, want)
+			}
+		})
+	}
+}
+
+func TestNumberAdd(t *testing.T) {
+	addTests := []struct {
+		number1 string
+		number2 string
+		want    string
+	}{
+		{"1", "1", "2"},
+		{"a", "z", "19"},
+		{"10", "10", "20"},
+	}
+
+	for _, tt := range addTests {
+		t.Run(tt.want, func(t *testing.T) {
+			want := tt.want
+			number1, err := customnumber.NewNumber(testValues, tt.number1)
+			if err != nil {
+				t.Errorf("expected nil got err: %v", err)
+			}
+			number2, err := customnumber.NewNumber(testValues, tt.number2)
+			if err != nil {
+				t.Errorf("expected nil got err: %v", err)
+			}
+			err = number1.Add(*number2)
+			if err != nil {
+				t.Errorf("expected nil got err: %v", err)
+			}
+			if number1.String() != want {
+				t.Errorf("got: %s, want: %s", number1.String(), want)
 			}
 		})
 	}
@@ -127,48 +215,4 @@ func TestDecrementOnZeroThrowsErr(t *testing.T) {
 	if err == nil {
 		t.Errorf("expected error to be thrown on Decrement")
 	}
-}
-
-func ExampleNumber_Increment() {
-	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
-	number, _ := customnumber.NewNumber(testValues, "123z")
-	number.Increment()
-	fmt.Printf(number.String())
-	// Output: 1240
-}
-
-func ExampleNumber_Decrement() {
-	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
-	number, _ := customnumber.NewNumber(testValues, "1230")
-	err := number.Decrement()
-	if err != nil {
-		// do whatever you need with the error
-	}
-	fmt.Printf(number.String())
-	// Output: 122z
-}
-
-func ExampleNumber_Decimal() {
-	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
-	number, _ := customnumber.NewNumber(testValues, "100")
-	dec, err := number.Decimal()
-
-	if err != nil {
-		// do whatever you need with the error
-	}
-
-	fmt.Printf("%d", dec)
-	// Output: 1296
-}
-
-func ExampleNewFromDecimal() {
-	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
-	number, _ := customnumber.NewFromDecimal(testValues, 100)
-	fmt.Printf("custom number: %v", number)
-}
-
-func ExampleNewNumber() {
-	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
-	number, _ := customnumber.NewNumber(testValues, "100")
-	fmt.Printf("custom number: %v", number)
 }

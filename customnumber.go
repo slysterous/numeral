@@ -84,6 +84,38 @@ func newDigit(values []rune, state rune) (*ring.Ring, error) {
 	return r, nil
 }
 
+// Sum sums 2 custom numbers into a 3rd one. Values are needed to define the new system under
+// which the number will be displayed.
+// Every number can be from a different system.
+func Sum(values []rune, number Number, number2 Number) (*Number, error) {
+	n1 := number.Decimal()
+	n2 := number2.Decimal()
+	newNumber, err := NewFromDecimal(values, n1+n2)
+	if err != nil {
+		return nil, err
+	}
+	return newNumber, nil
+}
+
+// abs returns the absolute value of x.
+func abs(x int64) int64 {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+// AbsDifference returns the absolute difference between two custom numbers
+func AbsDifference(values []rune, number Number, number2 Number) (*Number, error) {
+	n1 := number.Decimal()
+	n2 := number2.Decimal()
+	n, err := NewFromDecimal(values, int(abs(int64(n1-n2))))
+	if err != nil {
+		return nil, err
+	}
+	return n, nil
+}
+
 // Increment performs a +1 to the Number.
 func (n *Number) Increment() error {
 	// take the first digit from the right and keep going if there are any arithmetic holdings.
@@ -134,7 +166,7 @@ func (n *Number) Decrement() error {
 }
 
 // Decimal converts a custom number to a decimal integer.
-func (n *Number) Decimal() (int, error) {
+func (n *Number) Decimal() int {
 	dec := 0
 	di := 0
 	for d := n.digits.Back(); d != nil; d = d.Prev() {
@@ -147,7 +179,18 @@ func (n *Number) Decimal() (int, error) {
 		dec = dec + i*powInt(len(n.digitValues), di)
 		di++
 	}
-	return dec, nil
+	return dec
+}
+
+func (n *Number) Add(number Number) error {
+	num := n.Decimal()
+	num2 := number.Decimal()
+	newNum, err := NewFromDecimal(n.digitValues, num+num2)
+	if err != nil {
+		return err
+	}
+	n.digits = newNum.digits
+	return nil
 }
 
 // NewFromDecimal creates a custom number from a decimal integer.
@@ -180,11 +223,7 @@ func NewFromDecimal(values []rune, decimal int) (*Number, error) {
 	s.WriteString(sNumber.String())
 	sNumber = s
 
-	customNumber, err := NewNumber(values, sNumber.String())
-	if err != nil {
-		return nil, fmt.Errorf("creating converted number from decimal, err: %v", err)
-	}
-	return customNumber, nil
+	return NewNumber(values, sNumber.String())
 }
 
 func powInt(x, y int) int {

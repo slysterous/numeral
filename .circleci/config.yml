@@ -12,3 +12,6 @@ jobs:
         - run: go get golang.org/x/lint/golint
         - run: make fmt
         - run: make ci
+        - run: go test -v -cover -race -coverprofile=coverage.out
+        - run: go get github.com/mattn/goveralls
+        - run: GO111MODULE=off $GOPATH/bin/goveralls -coverprofile=coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
