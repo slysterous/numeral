@@ -2,6 +2,7 @@ package numeral_test
 
 import (
 	"fmt"
+
 	"github.com/slysterous/numeral"
 )
 
