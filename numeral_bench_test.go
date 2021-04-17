@@ -16,11 +16,24 @@ func benchmarkNumeralIncrement(initialValue string , values []rune, b *testing.B
 	}
 }
 
+func benchmarkNumeralDecimal(num numeral.Numeral,b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		_=num.Decimal()
+	}
+}
+
+func benchmarkNumeralAdd(num numeral.Numeral,num2 numeral.Numeral,b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		_ = num.Add(num2)
+	}
+}
+
 func BenchmarkNumeralIncrementDecimalSmall(b *testing.B) {
 	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
 	initValue:="0"
 	benchmarkNumeralIncrement(initValue,testValues,b)
 }
+
 func BenchmarkNumeralIncrementDecimalLarge(b *testing.B) {
 	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
 	initValue:="1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
@@ -32,6 +45,7 @@ func BenchmarkNumeralIncrementBinarySmall(b *testing.B) {
 	initValue:="0"
 	benchmarkNumeralIncrement(initValue,testValues,b)
 }
+
 func BenchmarkNumeralIncrementBinaryLarge(b *testing.B) {
 	testValues := []rune{'0', '1'}
 	initValue:="1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
@@ -43,23 +57,64 @@ func BenchmarkNumeralIncrementHexSmall(b *testing.B) {
 	initValue:="0"
 	benchmarkNumeralIncrement(initValue,testValues,b)
 }
+
 func BenchmarkNumeralIncrementHexLarge(b *testing.B) {
 	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f'}
 	initValue:="1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
 	benchmarkNumeralIncrement(initValue,testValues,b)
 }
 
-func BenchmarkNumeral_Decrement(b *testing.B) {
-	num,err:=numeral.NewNumeral(testValues,"zzzzzzzzzzzzzzzzzzzzz")
-	if err != nil {
-		//whatever
-	}
-	for n := 0; n < b.N; n++ {
-		_=num.Decrement()
-		//if err !=nil{
-		//	b.Errorf("expected nil, got err:%v",err)
-		//}
-	}
+func BenchmarkNumeralDecimalFromHex0(b *testing.B) {
+	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f'}
+	initValue:="0"
+	num,_:=numeral.NewNumeral(testValues,initValue)
+	benchmarkNumeralDecimal(*num,b)
 }
 
+func BenchmarkNumeralDecimalFromHexfffff(b *testing.B) {
+	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f'}
+	initValue:="ffffffffff"
+	num,_:=numeral.NewNumeral(testValues,initValue)
+	benchmarkNumeralDecimal(*num,b)
+}
 
+func BenchmarkNumeralDecimalFromHexffffffffff(b *testing.B) {
+	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f'}
+	initValue:="ffffffffff"
+	num,_:=numeral.NewNumeral(testValues,initValue)
+	benchmarkNumeralDecimal(*num,b)
+}
+
+func BenchmarkNumeralDecimalFromHexffffffffffffffffffff(b *testing.B) {
+	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f'}
+	initValue:="ffffffffffffffffffff"
+	num,_:=numeral.NewNumeral(testValues,initValue)
+	benchmarkNumeralDecimal(*num,b)
+}
+
+func BenchmarkNumeralAddBinaryOnHex(b *testing.B){
+	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f'}
+	testValues2:=[]rune{'0','1'}
+	initValue:="999"
+	num,_:=numeral.NewNumeral(testValues,initValue)
+	num2,_:=numeral.NewFromDecimal(testValues2,999000)
+	benchmarkNumeralAdd(*num,*num2,b)
+}
+
+func BenchmarkNumeralAddHexOnHex(b *testing.B){
+	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f'}
+	testValues2:=[]rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f'}
+	initValue:="999"
+	num,_:=numeral.NewNumeral(testValues,initValue)
+	num2,_:=numeral.NewFromDecimal(testValues2,999000)
+	benchmarkNumeralAdd(*num,*num2,b)
+}
+
+func BenchmarkNumeralAddDecOnDec(b *testing.B){
+	testValues := []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
+	testValues2:=[]rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
+	initValue:="999"
+	num,_:=numeral.NewNumeral(testValues,initValue)
+	num2,_:=numeral.NewFromDecimal(testValues2,999000)
+	benchmarkNumeralAdd(*num,*num2,b)
+}
