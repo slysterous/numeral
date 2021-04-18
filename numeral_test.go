@@ -215,7 +215,7 @@ func TestDecrementOnZeroThrowsErr(t *testing.T) {
 	if err == nil {
 		t.Errorf("expected error to be thrown on Decrement")
 	}
-	if number.String()!="0"{
-		t.Errorf("expected: 0, got: %s ",number.String())
+	if number.String() != "0" {
+		t.Errorf("expected: 0, got: %s ", number.String())
 	}
 }
