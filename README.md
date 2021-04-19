@@ -10,74 +10,39 @@ numerals based on custom positional (numeral) systems.
 
 ### 🧠 Why
 There are times, where we need to iterate over an X amount of possible combinations of values over a 
-specific number or a specific string etc or be able to perform basic operations on these type of numerals
-<strong> (iterators, rainbow tables, numeral system converters) </strong>
- 
-For example, if you have an identifier that can contain values that are either 0-9 and a-z and A-Z and you would want to know each possible 
-combination.
+specific number or a specific string etc <strong> (iterators, rainbow tables, numeral system converters) </strong>
 
-Your base (or radix) is the amount of possible values a digit can have. In this example:
-```.env
-0-9 : 10
+ You might also need to  have custom numerals and perform basic operations on them.
 
-a-z : 26
+### ♟️ Numeral Positional Systems
+A numeral is a symbol or group of symbols that represents a number. Numerals are not the same as numbers just as words are not the same with the things they refer to. The symbols "11(decimal)", "1011(binary)" and "B(hexadecimal)" are different numerals, all representing the same number. The number is the idea, the numeral is anything that represents that idea.
 
-A-Z : 26
-```
-That means that the base of the numeral system is 62. The possible values of a digit are:
-```.env
-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
-```
-Now, if you wanted to find all the possible combinations of numbers, for 4 digits, for the above example you would want to iterate from:
-```.env
-0000 to ZZZZ
-```
-These are <strong>916.132.832</strong> different possible combinations.
+A positional numeral system denotes usually the extension to any base of the Hindu–Arabic numeral system (or decimal system). In a more general sense, a positional system is a numeral system in which the contribution of a digit to the value of a number is the value of the digit multiplied by a factor determined by the position of the digit.
 
-### ♟️ How
-A <strong>numeral</strong> is a symbol or group of symbols that <strong>represents a number</strong>. numeral are not the
-same as numbers just as words are not the same with the things they refer to. The symbols <strong>"11", "1011" and "B"</strong>
-are different numeral, all representing the same number.
+In modern positional systems, such as the decimal system, the position of the digit means that its value must be multiplied by some value: in 555, the three identical symbols represent five hundreds, five tens, and five units, respectively, due to their different positions in the digit string.
 
-A <strong>numeral</strong> system (or system of numeration) is a <strong>framework</strong> where a set of numbers are 
-represented by numeral in a consistent manner. It can be seen as the context that allows the numeral <strong>"11"</strong> to be interpreted
-as the binary numeral for <strong>three</strong>, the decimal numeral for <strong>eleven</strong>, or other numbers in different bases.
+![sa](https://cdn-images-1.medium.com/max/600/1*bXQb00XiL0am9VbiptYRDw.png)
 
-Ideally, such a system will:
+According to its position of occurrence in the number, each digit is weighted. Towards the left, the weights increase by a constant factor equivalent to the base or radix. With the help of the radix point ('.'), the positions corresponding to integral weights (1) are differentiated from the positions corresponding to fractional weights (<1).
 
-* Represent a useful set of numbers (e.g. all whole numbers, integers, or real numbers)
+Any integer value that is greater than or equal to two can be used as the base or radix. 
+The digit position 'n' has weight r ^n. The largest value of digit position is always 1 less than the base value. The value of a number is a weighted sum of its digits.
+For example:
 
-* Give every number represented a unique representation (or at least a standard representation)
+![](https://cdn-images-1.medium.com/max/800/1*vZtIwxYzosvixTJ2JRuIzQ.png)
 
-* Reflect the algebraic and arithmetic structure of the numbers.
+Decimal (0–9 digits with radix 10) 2056 value breakdown
 
-In mathematical numeral systems the <strong>base or radix</strong> is usually the number of unique digits, including zero, that a positional numeral system uses to represent numbers. 
+![](https://cdn-images-1.medium.com/max/800/1*UrBcqfbQth_slc3_VOATgg.png)
 
-For example, for the decimal system the radix is 10, because it uses the 10 digits from 0 through 9. 
-When a number "hits" 9, the next number will not be another different symbol, but a "1" followed by a "0". 
+Hexadecimal(0–9 & A-F digits with radix 16) 171B value breakdown
 
-In binary, the radix is 2, since after it hits "1", instead of "2" or another written symbol, it jumps straight to "10", followed by "11" and "100".
+![](https://cdn-images-1.medium.com/max/800/1*JrIpqe-RX5KgD-P6nQSyQw.png)
 
-The highest symbol of a positional numeral system usually has the value one less than the value of the base of that numeral system. 
+The general form of value breakdown, where b is the base or radix of the numeral system
 
-The standard positional numeral systems differ from one another only in the base they use.
-
-The base is an integer that is greater than 1 (or less than negative 1), since a radix of zero would not have any digits, and a radix of 1 would only have the zero digit. Negative bases are rarely used.
-
-In base-10 (decimal) positional notation, there are 10 decimal digits and the number
-
-![decimal equation](https://latex.codecogs.com/png.latex?\bg_white&space;2056=(2%20*%2010^3%20)+(5%20*%2010^2)%20+(0%20*%2010%20^1)+(6*10^0))
-In base-16 (hexadecimal), there are 16 hexadecimal digits (0–9 and A–F) and the number
-
-![hex equation](https://latex.codecogs.com/png.latex?\bg_white&space;171B=(1*16^3)+(7*16^2)+(1*16^1)+(B*16^0)) (where B represents the number eleven as a single symbol)
-
-In general, in base-b, there are b digits and the number
-
-![base equation](https://latex.codecogs.com/png.latex?\bg_white&space;a_3a_2a_1a_0=(a_3%20*%20b^3)+(a_2*b^2)+(a_1*b^1)+(a_0*b^0))
-(Note that ![base digits](https://latex.codecogs.com/png.latex?\bg_white&space;a_3a_2a_1a_0) represents a sequence of digits, not multiplication)
-
-### ✨ What
-This library, <strong>numeral</strong> provides the ability to create custom positional numeral systems in an efficient and performant way.
+### ✨ The Package
+This package, <strong>numeral</strong> provides the ability to create custom positional numeral systems in an efficient and performant way.
 You can create numerals based on custom numeral systems and use them at will. 
 
 All you need is the possible values of a digit (e.g. 0123456789ABCDEF) and an initial number (e.g. 14FF)
@@ -94,7 +59,7 @@ When a digit rotates back to it's first digit as a result of an addition, then a
 and because of the doubly linked list it rotates the next, in weight digit, once. The opposite thing happens when a subtraction is happening.
 
 ## 🎬 Getting Started ##
-All you need is at least <strong>GO 1.15</strong>
+All you need is at least <strong>Go 1.13</strong>
 ## 🤓 Usage ##
 Get the package
 ```bash
@@ -127,7 +92,7 @@ test                           run tests
 ## ℹ️ Contributing ##
 Refer to [Contributing](https://github.com/slysterous/numeral/blob/main/CONTRIBUTING.md).
 ## 🐛 Report bugs using Github's [issues](https://github.com/slysterous/numeral/issues)
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/slysterous/numeral/issues);
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/slysterous/numeral/issues).
 ## ⚖️ License ##
 This library is distributed under the MIT license found in the [LICENSE](./LICENSE)
 file.
