@@ -29,11 +29,12 @@ Any integer value that is greater than or equal to two can be used as the base o
 The digit position 'n' has weight r ^n. The largest value of digit position is always 1 less than the base value. The value of a number is a weighted sum of its digits.
 For example:
 
-![](https://cdn-images-1.medium.com/max/800/1*vZtIwxYzosvixTJ2JRuIzQ.png)
+![decimal equation](https://latex.codecogs.com/png.latex?\bg_white&space;2056=(2%20*%2010^3%20)+(0%20*%2010^2)%20+(5%20*%2010%20^1)+(6*10^0))
 
 Decimal (0–9 digits with radix 10) 2056 value breakdown
 
-![](https://cdn-images-1.medium.com/max/800/1*UrBcqfbQth_slc3_VOATgg.png)
+![hex equation](https://latex.codecogs.com/png.latex?\bg_white&space;171B=(1%20*%2016^3%20)+(7%20*%2016^2)%20+(1%20*%2016%20^1)+(B*16^0))
+
 
 Hexadecimal(0–9 & A-F digits with radix 16) 171B value breakdown
 
